@@ -26,9 +26,10 @@ const imgUrl = mediaAPI.fetchImage(game.value.images);
     <div class="game-image-wrapper">
       <NuxtImg
         :src="imgUrl"
+        :alt="`Image for ${game.title}`"
         format="webp"
-        loading="lazy"
-        fetchpriority="low"
+        loading="eager"
+        fetchpriority="high"
         class="game-image"
       />
 

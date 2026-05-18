@@ -24,6 +24,7 @@ const imgUrl = mediaAPI.fetchImage(game.value.images);
       <div class="game-poster">
         <NuxtImg
           :src="imgUrl"
+          :alt="`Image for ${game.title}`"
           format="webp"
           loading="eager"
           fetchpriority="high"
