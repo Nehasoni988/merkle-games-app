@@ -8,13 +8,13 @@ This document explains the reasoning behind the architectural and technical choi
 
 ## Technology Stack
 
-| Concern | Choice | Reason |
-|---------|--------|--------|
-| Framework | Nuxt 4 (latest) | Assignment requirement; also provides file-based routing, SSR-friendly data fetching, and auto-imports out of the box |
-| Language | TypeScript (strict) | Catches interface mismatches early, especially important given the API has several nested relations |
-| Styling | SCSS with CSS custom properties | Assignment requirement (no Tailwind); variables enable a consistent design token system and straightforward dark mode |
-| Testing | Vitest + Vue Test Utils | Faster than Jest for Vite-based projects; API is identical, so migration cost is zero |
-| Image handling | `@nuxt/image` | Provides lazy loading, WebP conversion, and a clean `<NuxtImg>` component without extra boilerplate |
+| Concern        | Choice                          | Reason                                                                                                                |
+| -------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Framework      | Nuxt 4 (latest)                 | Assignment requirement; also provides file-based routing, SSR-friendly data fetching, and auto-imports out of the box |
+| Language       | TypeScript (strict)             | Catches interface mismatches early, especially important given the API has several nested relations                   |
+| Styling        | SCSS with CSS custom properties | Assignment requirement (no Tailwind); variables enable a consistent design token system and straightforward dark mode |
+| Testing        | Vitest + Vue Test Utils         | Faster than Jest for Vite-based projects; API is identical, so migration cost is zero                                 |
+| Image handling | `@nuxt/image`                   | Provides lazy loading, WebP conversion, and a clean `<NuxtImg>` component without extra boilerplate                   |
 
 ---
 
@@ -32,7 +32,7 @@ The index page uses `useAsyncData` to:
 
 1. Fetch all game IDs released between 2015 and 2017 from the `/by-date-range` endpoint.
 2. Randomly shuffle the IDs and slice the first 15.
-3. Fire 15 parallel `Promise.all` pairs — one for game details, one for stats — to merge `average_rating` into the game object.
+3. Fire 5 \* 2 = 10 parallel `Promise.all` pairs — one for game details, one for stats — to merge `average_rating` into the game object.
 
 This approach respects the API's existing endpoints without requiring a dedicated "random 15 games with stats" endpoint. The parallel fetches keep perceived load time low.
 
@@ -93,20 +93,20 @@ Theme support is implemented via a CSS custom property swap driven by `appTheme.
 
 - **No pagination on the index page.** The assignment specifies exactly 15 games, so pagination was not implemented. The service layer and composable are structured to support it easily if the scope expands.
 - **Random selection is client-side.** Games are randomly shuffled in the browser after fetching all IDs. This means the set changes on every page refresh, which matches the "random" requirement but does increase the initial payload of IDs. An ideal solution would be a server-side `/games/random?limit=15` endpoint.
-- **Parallel fetching without a concurrency cap.** The 15 parallel `Promise.all` calls on the index page work well at this scale. The `withConcurrencyLimit` utility is available if the batch size grows.
 - **Tests cover the composable and key components.** Integration and E2E tests (e.g., with Playwright) were not added within the time allocation but would be the logical next step.
+- **Had to enable `/media` endpoint in server code.** I need to make a change inside the server code and enable the `/media` route because `/media` endpoint was throwing 404 error.
 
 ---
 
 ## Time Spent
 
-Approximately **3.5 hours**, broken down roughly as:
+Approximately **4 hours**, broken down roughly as:
 
 - Project scaffolding and API service layer: 30 min
 - Index page and data fetching: 60 min
 - Detail page and components: 30 min
 - SCSS styling and responsive layout: 45 min
-- Filtering, sorting composable: 20 min
-- Error handling, accessibility, SEO: 20 min
-- Unit tests: 35 min
+- Filtering, sorting composable: 30 min
+- Error handling, accessibility, SEO: 30 min
+- Unit tests: 45 min
 - Documentation: 10 min

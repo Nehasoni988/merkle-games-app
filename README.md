@@ -11,7 +11,7 @@ A responsive Nuxt 4 / TypeScript application for exploring games via the Merkle 
 | Node.js | 20 or later |
 | npm | 10 or later |
 
-> The Merkle Games API server must be running locally before you start the client. Refer to the `/server` folder and this `README.md` for API setup instructions. By default the API is expected at `http://localhost:8000`.
+> The Merkle Games API server must be running locally before starting the client. Please refer the API code inside the `/server` folder and this `README.md` for API setup instructions. By default the API is expected at `http://localhost:8000`.
 
 ---
 
@@ -20,8 +20,7 @@ A responsive Nuxt 4 / TypeScript application for exploring games via the Merkle 
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd <repo-root>
+git clone https://github.com/Nehasoni988/merkle-games-app
 ```
 
 ### 2. Start the API server
@@ -48,7 +47,7 @@ NUXT_PUBLIC_API_BASE=http://localhost:8000/api/v1
 NUXT_PUBLIC_THEME=light
 ```
 
-If your API runs on a different port, update `NUXT_PUBLIC_API_BASE` accordingly.
+If API runs on a different port, update `NUXT_PUBLIC_API_BASE` accordingly.
 
 ### 5. Start the development server
 
