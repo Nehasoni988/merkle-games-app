@@ -1,6 +1,6 @@
 # Merkle Games — Client
 
-🚀 **Live Demo:** https://multi-tenant-platform-by-neha-soni.vercel.app/
+🚀 **Live Demo:** https://merkle-games-app-by-neha-soni.vercel.app/
 
 A responsive Nuxt 4 / TypeScript application for exploring games via the Merkle Games REST API. Users can browse 15 randomly selected games released between 2015 and 2017, sort and filter them, and view full game details with player reviews.
 
