@@ -1,0 +1,170 @@
+export interface GameAttributes {
+  id?: number;
+  title: string;
+  description?: string;
+  genre_id: number;
+  platform: string;
+  release_date: Date;
+  developer_id: number;
+  publisher_id: number;
+  created_at?: Date;
+  updated_at?: Date;
+  // Relations
+  genre?: GenreAttributes;
+  developer?: CompanyAttributes;
+  publisher?: CompanyAttributes;
+  reviews?: UserReviewAttributes[];
+  images?: ImageAttributes[];
+}
+
+export interface CompanyAttributes {
+  id?: number;
+  name: string;
+  country?: string;
+  founded_year?: number;
+  logo?: string;
+  company_type: "Developer" | "Publisher";
+  created_at?: Date;
+  updated_at?: Date;
+  // Relations
+  developedGames?: GameAttributes[];
+  publishedGames?: GameAttributes[];
+}
+
+export interface GenreAttributes {
+  id?: number;
+  name: string;
+  created_at?: Date;
+  updated_at?: Date;
+  // Relations
+  games?: GameAttributes[];
+}
+
+export interface UserAttributes {
+  id?: number;
+  username: string;
+  email: string;
+  registration_date: Date;
+  created_at?: Date;
+  updated_at?: Date;
+  // Relations
+  reviews?: UserReviewAttributes[];
+}
+
+export interface UserReviewAttributes {
+  id?: number;
+  game_id: number;
+  user_id: number;
+  rating: number;
+  review_text?: string;
+  review_date: Date;
+  created_at?: Date;
+  updated_at?: Date;
+  // Relations
+  game?: GameAttributes;
+  user?: UserAttributes;
+}
+
+export interface ImageAttributes {
+  id?: number;
+  image_url: string;
+  image_type: "Screenshot" | "Cover" | "Artwork";
+  created_at?: Date;
+  updated_at?: Date;
+}
+
+export interface ImageRelationAttributes {
+  id?: number;
+  image_id: number;
+  related_type: "Game" | "Company" | "Genre" | "Rating" | "User";
+  related_id: number;
+  created_at?: Date;
+  updated_at?: Date;
+}
+
+export interface PaginationOptions {
+  limit?: number;
+  page?: number;
+  offset?: number;
+}
+
+export interface SearchOptions extends PaginationOptions {
+  search?: string;
+  sort?: string;
+  order?: "ASC" | "DESC";
+}
+
+export interface ApiResponse<T> {
+  data: T;
+  pagination?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+export interface ErrorResponse {
+  error: string;
+  message: string;
+  statusCode: number;
+}
+
+// GraphQL Arguments Types
+export interface GameQueryArgs {
+  page?: number;
+  limit?: number;
+  genreId?: string;
+  platform?: string;
+  search?: string;
+}
+
+export interface ReviewQueryArgs {
+  gameId?: string;
+  userId?: string;
+  minRating?: number;
+  maxRating?: number;
+  limit?: number;
+}
+
+export interface ImageQueryArgs {
+  relatedType?: "Game" | "Company" | "Genre" | "Rating" | "User";
+  relatedId?: number;
+}
+
+export interface PaginatedGamesResult {
+  games: any[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
+
+export interface Stats {
+  id: string;
+  title: string;
+  average_rating: number;
+  total_reviews: 2;
+}
+
+export interface GameResponse {
+  data: GameAttributes
+}
+
+export interface StatsResponse {
+  data: Stats;
+}
+
+export interface IdsData {
+  ids: number[];
+}
+
+export interface GameWithReviews extends GameAttributes {
+  average_rating: number;
+}
+
+export interface GenreResponse {
+  data: GenreAttributes[]
+}
+
+export type FilterQuery = "searchQuery" | "genreQuery" | "sortBy" | "sortOrder";
+
